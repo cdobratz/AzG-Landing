@@ -57,6 +57,7 @@
         .install-content.active { display: block; }
         .install-content p { color: var(--text-muted); margin-bottom: 16px; }
         code { display: block; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 14px; text-align: left; overflow-x: auto; margin: 0 auto; max-width: 500px; }
+        .platform-downloads { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
         footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
         footer a { color: var(--primary); text-decoration: none; }
         .terminal { padding: 60px 0; }
@@ -182,11 +183,14 @@ scoop install azguard</code>
             </div>
             
             <div class="install-content" id="direct">
-                <p>Download directly from GitHub</p>
-                <code>https://github.com/cdobratz/AzGuard/releases</code>
-                <div style="margin-top: 16px;">
-                    <a href="https://github.com/cdobratz/AzGuard/releases" class="btn btn-secondary" target="_blank">Download</a>
+                <p>Choose your platform</p>
+                <div class="platform-downloads">
+                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_windows_amd64.zip" class="btn btn-secondary" target="_blank">Windows (x64)</a>
+                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_darwin_amd64.zip" class="btn btn-secondary" target="_blank">macOS (Intel)</a>
+                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_darwin_arm64.zip" class="btn btn-secondary" target="_blank">macOS (Apple Silicon)</a>
+                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_linux_amd64.tar.gz" class="btn btn-secondary" target="_blank">Linux (x64)</a>
                 </div>
+                <p style="margin-top: 16px; font-size: 14px;">Or browse all releases: <a href="https://github.com/cdobratz/AzGuard/releases" target="_blank">View All</a></p>
             </div>
         </div>
     </section>
