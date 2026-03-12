@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AzGuard - Protect Your Azure Free Tier</title>
-    <meta name="description" content="One command to make sure your Azure free tier doesn't surprise you with a bill">
+    <title>AzGuard - Stop Cloud Bill Shock Before It Happens</title>
+    <meta name="description" content="Monitor Azure & AWS free tiers in one command. No surprises. No unexpected charges.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,7 @@
         :root {
             --primary: #0078d4;
             --primary-dark: #106ebe;
+            --aws-orange: #FF9900;
             --bg: #ffffff;
             --bg-alt: #f8f9fa;
             --text: #1a1a1a;
@@ -35,51 +36,81 @@
         .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 24px; font-weight: 500; transition: color 0.2s; }
         .nav-links a:hover { color: var(--primary); }
         .hero { padding: 80px 0; text-align: center; }
-        .hero h1 { font-size: 48px; font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+        .hero h1 { font-size: 48px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
         .hero h1 span { color: var(--primary); }
-        .hero p { font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+        .hero p { font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 24px; }
+        .supported-clouds { display: flex; gap: 24px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; font-size: 15px; color: var(--text-muted); }
+        .supported-clouds span { display: flex; align-items: center; gap: 6px; }
+        .cloud-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-weight: 500; font-size: 13px; }
+        .azure-badge { background: #e8f3fd; color: #0078d4; }
+        .aws-badge { background: #fff4e6; color: #FF9900; }
         .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .btn { display: inline-block; padding: 14px 28px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 8px; transition: all 0.2s; }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(0, 120, 212, 0.3); }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 120, 212, 0.4); }
         .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .why-matters { padding: 60px 0; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .why-matters h2 { text-align: center; font-size: 32px; margin-bottom: 48px; }
+        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; max-width: 900px; margin: 0 auto; }
+        .problem-item h3 { font-size: 18px; margin-bottom: 12px; color: var(--primary); }
+        .problem-item p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+        
         .features { padding: 80px 0; background: var(--bg-alt); }
         .features h2 { text-align: center; font-size: 32px; margin-bottom: 48px; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
         .feature-card { background: var(--bg); padding: 32px; border-radius: 12px; border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; }
         .feature-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); }
         .feature-card h3 { font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .feature-card p { color: var(--text-muted); font-size: 15px; }
-        .install { padding: 80px 0; background: var(--bg-alt); }
-        .install h2 { font-size: 32px; margin-bottom: 24px; text-align: center; }
-        .install-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-        .tab-btn { padding: 10px 20px; border: 1px solid var(--border); background: var(--bg); border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
-        .tab-btn:hover { border-color: var(--primary); }
-        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .install-content { display: none; text-align: center; }
-        .install-content.active { display: block; }
-        .install-content p { color: var(--text-muted); margin-bottom: 16px; }
-        code { display: block; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 14px; text-align: left; overflow-x: auto; margin: 0 auto; max-width: 500px; }
-        .platform-downloads { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .feature-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+        
+        .install { padding: 80px 0; background: var(--bg); }
+        .install h2 { font-size: 32px; margin-bottom: 16px; text-align: center; }
+        .install-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 32px; }
+        .install-recommended { background: var(--bg-alt); padding: 32px; border-radius: 12px; border: 2px solid var(--primary); margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .install-recommended h3 { font-size: 18px; margin-bottom: 16px; color: var(--primary); }
+        .install-platform { color: var(--text-muted); margin-bottom: 8px; margin-top: 24px; font-size: 14px; font-weight: 500; }
+        .install-platform:first-of-type { margin-top: 0; }
+        .install-oneliner { background: var(--bg-alt); padding: 32px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .install-oneliner h3 { font-size: 18px; margin-bottom: 16px; }
+        code { display: block; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 14px; text-align: left; overflow-x: auto; font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; }
+        details { max-width: 600px; margin: 24px auto 0; text-align: center; }
+        details summary { cursor: pointer; padding: 12px; background: var(--bg-alt); border-radius: 8px; font-weight: 500; }
+        details summary:hover { background: #e8f3fd; }
+        details[open] summary { margin-bottom: 16px; }
+        
+        .social-proof { padding: 80px 0; background: var(--bg-alt); }
+        .social-proof h2 { text-align: center; font-size: 32px; margin-bottom: 48px; }
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; max-width: 800px; margin: 0 auto 48px; }
+        .audience-item { text-align: center; }
+        .audience-item strong { display: block; font-size: 18px; margin-bottom: 8px; }
+        .audience-item p { color: var(--text-muted); font-size: 15px; }
+        .cta-footer { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        
         footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
         footer a { color: var(--primary); text-decoration: none; }
+        
         .terminal { padding: 60px 0; }
-        .terminal-window { background: #1e1e1e; border-radius: 12px; overflow: hidden; max-width: 600px; margin: 0 auto; text-align: left; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); }
+        .terminal-window { background: #1e1e1e; border-radius: 12px; overflow: hidden; max-width: 700px; margin: 0 auto; text-align: left; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); }
         .terminal-header { background: #2d2d2d; padding: 12px 16px; display: flex; gap: 8px; }
         .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot-red { background: #ff5f56; }
         .dot-yellow { background: #ffbd2e; }
         .dot-green { background: #27c93f; }
-        .terminal-body { padding: 20px; font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; font-size: 14px; color: #d4d4d4; }
-        .terminal-line { margin-bottom: 8px; }
+        .terminal-body { padding: 20px; font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; font-size: 13px; color: #d4d4d4; line-height: 1.5; }
+        .terminal-line { margin-bottom: 4px; }
         .prompt { color: #4ec9b0; }
         .command { color: #9cdcfe; }
         .output { color: #d4d4d4; }
         .warning { color: #dcdcaa; }
+        .success { color: #4ec9b0; }
+        .section-divider { color: #666; font-weight: bold; margin-top: 12px; }
+        
         @media (max-width: 640px) {
             .hero h1 { font-size: 32px; }
             .hero p { font-size: 17px; }
+            .supported-clouds { flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
@@ -111,10 +142,14 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Protect Your<br><span>Azure Free Tier</span></h1>
-            <p>One command to make sure your Azure free tier doesn't surprise you with a bill. Monitor usage, set alerts, and clean up resources automatically.</p>
+            <h1>Stop Cloud <span>Bill Shock</span><br>Before It Happens</h1>
+            <p>One command to monitor Azure & AWS free tiers. No surprises. Monitor usage, set alerts, and clean up resources automatically.</p>
+            <div class="supported-clouds">
+                <span><span class="cloud-badge azure-badge">Azure</span> 65+ services monitored</span>
+                <span><span class="cloud-badge aws-badge">AWS</span> 100+ services tracked</span>
+            </div>
             <div class="cta-buttons">
-                <a href="#install" class="btn btn-primary">Get Started</a>
+                <a href="#install" class="btn btn-primary">Get Started Free</a>
                 <a href="https://github.com/cdobratz/AzGuard" class="btn btn-secondary" target="_blank">View on GitHub</a>
             </div>
         </div>
@@ -130,17 +165,43 @@
                 </div>
                 <div class="terminal-body">
                     <div class="terminal-line"><span class="prompt">$</span> <span class="command">azguard status</span></div>
-                    <div class="terminal-line"><span class="output">Checking Azure free tier usage...</span></div>
+                    <div class="terminal-line"><span class="output">Checking free tier usage...</span></div>
                     <div class="terminal-line"><span class="output"></span></div>
-                    <div class="terminal-line"><span class="output">┌─────────────────────────────────────────┐</span></div>
-                    <div class="terminal-line"><span class="output">│  Azure Free Tier Status                 │</span></div>
-                    <div class="terminal-line"><span class="output">├─────────────────────────────────────────┤</span></div>
-                    <div class="terminal-line"><span class="output">│  Compute: ████████░░ 750/1000 hours    │</span></div>
-                    <div class="terminal-line"><span class="output">│  Storage:  ████░░░░░░ 4/5 GB            │</span></div>
-                    <div class="terminal-line"><span class="output">│  SQL DB:   █████████░ 19/20 GB          │</span></div>
-                    <div class="terminal-line"><span class="output">│  Bandwidth: █░░░░░░░░░ 1/15 GB         │</span></div>
-                    <div class="terminal-line"><span class="output">└─────────────────────────────────────────┘</span></div>
-                    <div class="terminal-line"><span class="warning">⚠ SQL Database at 95% - consider cleaning up</span></div>
+                    <div class="terminal-line"><span class="section-divider">┌─────────────── AZURE ───────────────┐</span></div>
+                    <div class="terminal-line"><span class="output">│ Compute:    ████████░░ 750/1000 hrs │</span></div>
+                    <div class="terminal-line"><span class="output">│ Storage:    ████░░░░░░ 4/5 GB       │</span></div>
+                    <div class="terminal-line"><span class="output">│ SQL DB:     █████████░ 19/20 GB     │</span></div>
+                    <div class="terminal-line"><span class="output">│ Budget:     $0.23 of $5.00          │</span></div>
+                    <div class="terminal-line"><span class="section-divider">└─────────────────────────────────────┘</span></div>
+                    <div class="terminal-line"><span class="output"></span></div>
+                    <div class="terminal-line"><span class="section-divider">┌─────────────── AWS ─────────────────┐</span></div>
+                    <div class="terminal-line"><span class="output">│ EC2:        ███░░░░░░░ 127/750 hrs  │</span></div>
+                    <div class="terminal-line"><span class="output">│ S3:         ████████░░ 4.2/5 GB     │</span></div>
+                    <div class="terminal-line"><span class="output">│ Lambda:     ██░░░░░░░░ 200K/1M reqs │</span></div>
+                    <div class="terminal-line"><span class="section-divider">└─────────────────────────────────────┘</span></div>
+                    <div class="terminal-line"><span class="output"></span></div>
+                    <div class="terminal-line"><span class="warning">⚠ Azure SQL Database at 95% - consider cleanup</span></div>
+                    <div class="terminal-line"><span class="success">✓ All AWS services within limits</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-matters">
+        <div class="container">
+            <h2>Why Free Tiers Surprise You</h2>
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <h3>Silent Expiration</h3>
+                    <p>Azure's 12-month free services don't stop when they expire—they just start charging you. AWS monthly limits just reset and keep going.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>Hidden Dependencies</h3>
+                    <p>A "free" VM triggers billable disks, IPs, and bandwidth. AWS Lambda needs S3, CloudWatch, and more. One service becomes five charges.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>No Hard Stops</h3>
+                    <p>Both clouds let you exceed limits and bill you later. No warnings, no budget locks by default. You find out when the invoice arrives.</p>
                 </div>
             </div>
         </div>
@@ -151,28 +212,20 @@
             <h2>Everything You Need</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h3>📊 Real-time Status</h3>
-                    <p>Check your free tier usage instantly. See compute hours, storage, SQL, and bandwidth at a glance.</p>
+                    <h3>🎯 Free Tier Tracking</h3>
+                    <p>Monitor Azure (65+ services) and AWS (100+ services) against free tier limits. Real-time visibility into what you're using.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>🔍 Smart Scanning</h3>
-                    <p>Scan all resources and identify ones approaching limits or that are unused and can be cleaned up.</p>
+                    <h3>⚠️ Smart Alerts</h3>
+                    <p>Set budget alerts for Azure ($1-$100) and usage thresholds for AWS (e.g., 80% of EC2 hours). Get warned before charges hit.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>💰 Budget Alerts</h3>
-                    <p>Set budget thresholds and get warned before you hit limits or incur unexpected charges.</p>
+                    <h3>📊 Cost Breakdown</h3>
+                    <p>See current month spending by service. Forecast trends. Understand exactly where your money is going across both clouds.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>🧹 Auto Cleanup</h3>
-                    <p>Automatically clean up unused resources to stay within free tier limits and save money.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>💵 Cost Tracking</h3>
-                    <p>View detailed cost breakdown and forecast to understand your Azure spending.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>☁️ Azure Native</h3>
-                    <p>Built with official Azure SDK. Uses your existing Azure CLI authentication - no extra setup needed.</p>
+                    <h3>🧹 Cleanup Guide</h3>
+                    <p>Interactive guide to find and remove unused resources. Stay within limits without manual hunting through consoles.</p>
                 </div>
             </div>
         </div>
@@ -181,36 +234,34 @@
     <section class="install" id="install">
         <div class="container">
             <h2>Install AzGuard</h2>
-            <div class="install-tabs">
-                <button class="tab-btn active" data-tab="brew">Homebrew</button>
-                <button class="tab-btn" data-tab="scoop">Scoop</button>
-                <button class="tab-btn" data-tab="direct">Direct</button>
-            </div>
+            <p class="install-subtitle">Choose your preferred installation method</p>
             
-            <div class="install-content active" id="brew">
-                <p>macOS & Linux</p>
+            <div class="install-recommended">
+                <h3>📦 Package Manager (Recommended)</h3>
+                <p class="install-platform">macOS/Linux</p>
                 <code>brew install cdobratz/azguard/azguard</code>
-            </div>
-            
-            <div class="install-content" id="scoop">
-                <p>Windows (PowerShell)</p>
+                <p class="install-platform">Windows</p>
                 <code>scoop bucket add azguard https://github.com/cdobratz/scoop-azguard
 scoop install azguard</code>
-                <p style="margin-top: 12px; font-size: 13px; color: #888;">If azguard doesn't run after install, restart your terminal or run: <code style="font-size: 12px; padding: 8px;">$env:PATH += ";$env:USERPROFILE\scoop\shims"</code></p>
             </div>
             
-            <div class="install-content" id="direct">
-                <p>Choose your platform</p>
-                <div class="platform-downloads">
-                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_windows_amd64.zip" class="btn btn-secondary" target="_blank">Windows (x64)</a>
-                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_darwin_amd64.zip" class="btn btn-secondary" target="_blank">macOS (Intel)</a>
-                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_darwin_arm64.zip" class="btn btn-secondary" target="_blank">macOS (Apple Silicon)</a>
-                    <a href="https://github.com/cdobratz/AzGuard/releases/download/v1.0.0/azguard_1.0.0_linux_amd64.tar.gz" class="btn btn-secondary" target="_blank">Linux (x64)</a>
-                </div>
-                <p style="margin-top: 16px; font-size: 14px;">Or browse all releases: <a href="https://github.com/cdobratz/AzGuard/releases" target="_blank">View All</a></p>
+            <div class="install-oneliner">
+                <h3>🚀 One-Line Install (All Platforms)</h3>
+                <code>curl -sSL https://azguard.dev/install.sh | bash</code>
             </div>
+            
+            <details>
+                <summary>💾 Direct Downloads (v1.0.5)</summary>
+                <p style="margin-top: 16px;">
+                    <a href="https://github.com/cdobratz/AzGuard/releases/latest" target="_blank" class="btn btn-secondary">Download Latest Release from GitHub</a>
+                </p>
+                <p style="margin-top: 12px; font-size: 14px; color: var(--text-muted);">
+                    Available for Windows, macOS (Intel & Apple Silicon), and Linux
+                </p>
+            </details>
         </div>
     </section>
+
 
     <footer>
         <div class="container">
@@ -223,16 +274,5 @@ scoop install azguard</code>
             </p>
         </div>
     </footer>
-
-    <script>
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.install-content').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(btn.dataset.tab).classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>
