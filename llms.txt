@@ -17,7 +17,7 @@ Source checked: https://github.com/cdobratz/AzGuard commit bdeb046116f29541185f8
 - `azguard cleanup` prints a static guide. Automatic cleanup is coming soon.
 - The CLI has no telemetry client. It calls Azure and AWS for the command you run, public price-list APIs when an estimate needs them, and a webhook only when you set one.
 
-`https://azguard.dev/install.sh` installs the latest GitHub release (v1.0.5 as of 2026-10-18) for linux and darwin, amd64 and arm64, after a sha256 check against that release's checksums.txt.
+`https://azguard.dev/install.sh` installs the latest GitHub release (v1.1.0 as of 2026-10-18) for linux and darwin, amd64 and arm64, after a sha256 check against that release's checksums.txt.
 
 ## Contact
 

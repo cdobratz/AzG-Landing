@@ -206,8 +206,8 @@ EOF
 self_test() {
   local file name good bad
   WORK="$(mktemp -d)"
-  file="${WORK}/azguard_1.0.5_linux_amd64.tar.gz"
-  name="azguard_1.0.5_linux_amd64.tar.gz"
+  file="${WORK}/azguard_1.1.0_linux_amd64.tar.gz"
+  name="azguard_1.1.0_linux_amd64.tar.gz"
   printf 'azguard-checksum-fixture' >"$file"
   good="${WORK}/good.txt"
   bad="${WORK}/bad.txt"
