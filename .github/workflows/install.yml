@@ -1,0 +1,31 @@
+name: install.sh
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  install:
+    name: install (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Content-Type header for install.sh
+        run: grep -q 'Content-Type: text/plain' _headers
+
+      - name: Checksum mismatch exits non-zero
+        run: bash install.sh --self-test
+
+      - name: Install the latest release
+        run: |
+          set -euo pipefail
+          prefix="${RUNNER_TEMP}/azguard-bin"
+          bash install.sh --prefix "$prefix"
+          test -x "${prefix}/azguard"
+          "${prefix}/azguard" version
+          "${prefix}/azguard" --version

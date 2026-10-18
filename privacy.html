@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy - AzGuard</title>
+    <meta name="description" content="Privacy information for AzGuard and azguard.dev, a product of Poietes LLC.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #0078d4; --text: #1a1a1a; --text-muted: #666666; --border: #e0e0e0; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: var(--text); background: #fff; }
+        .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 24px 0; border-bottom: 1px solid var(--border); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 24px; font-weight: 500; }
+        main { padding: 48px 0 64px; }
+        h1 { font-size: 36px; margin-bottom: 16px; }
+        h2 { font-size: 20px; margin: 28px 0 8px; }
+        p, li { color: var(--text-muted); margin-bottom: 12px; }
+        ul { padding-left: 20px; }
+        a { color: var(--primary); }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
+        footer a { color: var(--primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">AzGuard</a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="https://github.com/cdobratz/AzGuard">GitHub</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Privacy</h1>
+            <p>AzGuard and azguard.dev are operated by Poietes LLC, 30 N Gould St, Sheridan, WY 82801. Contact <a href="mailto:info@poietes.org">info@poietes.org</a> or 480-382-0210. More about the company is at <a href="https://poietes.org/">poietes.org</a>.</p>
+
+            <h2>The CLI</h2>
+            <p>The azguard command-line tool has no telemetry client. This was checked in the AzGuard source on October 18, 2026, at commit <a href="https://github.com/cdobratz/AzGuard/commit/bdeb046116f29541185f884ce6c940d44299cec8">bdeb046116f29541185f884ce6c940d44299cec8</a>. The source contains no analytics SDK and no call that reports usage back to Poietes LLC.</p>
+            <p>When you run a command, the CLI can contact:</p>
+            <ul>
+                <li>Azure and AWS APIs for that command, using credentials on your machine.</li>
+                <li>Public price-list endpoints (<a href="https://prices.azure.com/api/retail/prices">prices.azure.com</a> and the AWS Price List API) when a cost estimate needs them.</li>
+                <li>A webhook URL only when you pass <code>--webhook</code> to <code>azguard watch</code>.</li>
+            </ul>
+
+            <h2>This website</h2>
+            <p>azguard.dev is a static site. It does not ask you to create an account and it does not include an analytics script. Pages load typefaces from Google Fonts, so your browser requests those files from Google. The site is hosted on Cloudflare.</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Poietes LLC</p>
+            <p style="margin-top: 8px;">
+                <a href="/privacy">Privacy</a> ·
+                <a href="/terms">Terms</a> ·
+                <a href="https://github.com/cdobratz/AzGuard">GitHub</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
