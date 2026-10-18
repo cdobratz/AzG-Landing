@@ -1,0 +1,35 @@
+# AzGuard
+
+> Find the cloud resources you forgot before they bill you.
+
+AzGuard is a free command-line tool for Azure and AWS, published by Poietes LLC.
+
+## CLI
+
+Source checked: https://github.com/cdobratz/AzGuard commit bdeb046116f29541185f884ce6c940d44299cec8 (main, 2026-10-18).
+
+- `azguard resources` finds idle and orphaned resources and prints a monthly list-price estimate. The command is read-only.
+- `azguard watch` polls the Azure Activity Log and AWS CloudTrail. The default interval is 15 minutes. It can notify the desktop or a webhook you pass with `--webhook`.
+- `azguard guard` checks billable commands against a session budget.
+- `azguard status`, `azguard scan`, `azguard budget`, and `azguard cost` cover Azure free-tier usage, budgets, and cost.
+- `azguard aws` covers AWS free-tier usage and cost.
+- The limits files list 12 Azure services (`configs/free_tier_limits.yaml`) and 13 AWS services (`configs/aws_free_tier_limits.yaml`).
+- `azguard cleanup` prints a static guide. Automatic cleanup is coming soon.
+- The CLI has no telemetry client. It calls Azure and AWS for the command you run, public price-list APIs when an estimate needs them, and a webhook only when you set one.
+
+`https://azguard.dev/install.sh` installs the latest GitHub release (v1.0.5 as of 2026-10-18) for linux and darwin, amd64 and arm64, after a sha256 check against that release's checksums.txt.
+
+## Contact
+
+Poietes LLC
+Email: info@poietes.org
+Phone: 480-382-0210
+Address: 30 N Gould St, Sheridan, WY 82801
+https://poietes.org/
+
+## Pages
+
+- https://azguard.dev/
+- https://azguard.dev/privacy
+- https://azguard.dev/terms
+- https://github.com/cdobratz/AzGuard
