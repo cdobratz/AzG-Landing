@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Content-Type header for install.sh
-        run: grep -q 'Content-Type: text/plain' _headers
+        run: "grep -F 'Content-Type: text/plain' _headers"
 
       - name: Checksum mismatch exits non-zero
         run: bash install.sh --self-test
