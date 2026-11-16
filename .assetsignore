@@ -1,0 +1,55 @@
+# The assets directory is the repository root. Wrangler uploads every file
+# in that directory except .assetsignore, _headers, _redirects, and the
+# patterns below. Site pages, the favicon, sitemap, llms.txt, and the
+# public installer stay published.
+
+# Git metadata and forge config (.git, .github, .gitignore, .gitlab, ...)
+.git
+.git*
+
+# Wrangler config, local state, and secret files
+.wrangler
+/wrangler.toml
+/wrangler.json
+/wrangler.jsonc
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+.npmrc
+.yarnrc
+.yarnrc.yml
+
+# Package manager files
+node_modules
+/package.json
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
+/bun.lock
+/bun.lockb
+/npm-shrinkwrap.json
+
+# Repo docs that are not site pages
+/README.md
+/LICENSE
+/LICENSE.md
+/CHANGELOG.md
+/CONTRIBUTING.md
+
+# CI config and local tooling scripts.
+# /install.sh is the public installer linked from the homepage.
+.github
+.gitlab
+.gitlab-ci.yml
+/scripts
+Makefile
+justfile
+*.sh
+!/install.sh
+
+# Pages leftovers and OS junk
+/_worker.js
+/_routes.json
+/functions
+.DS_Store
