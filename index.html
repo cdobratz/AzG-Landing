@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AzGuard - Find the cloud resources you forgot before they bill you</title>
-    <meta name="description" content="Idle disks, orphaned IPs, NAT gateways, and stopped-but-billed VMs. Azure and AWS. Free CLI.">
+    <title>AzGuard - Find and clean up forgotten cloud resources</title>
+    <meta name="description" content="Find and clean up forgotten and AI-created Azure and AWS resources. azguard cleanup dry-runs until --apply. Free open-source CLI with free-tier and credit tracking.">
+    <meta property="og:title" content="AzGuard - Find and clean up forgotten cloud resources">
+    <meta property="og:description" content="Find and clean up forgotten and AI-created Azure and AWS resources. azguard cleanup dry-runs until --apply. Free open-source CLI with free-tier and credit tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://azguard.dev/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AzGuard - Find and clean up forgotten cloud resources">
+    <meta name="twitter:description" content="Find and clean up forgotten and AI-created Azure and AWS resources. azguard cleanup dry-runs until --apply. Free open-source CLI with free-tier and credit tracking.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,11 +82,10 @@
         .install-oneliner { background: var(--bg-alt); padding: 32px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; }
         .install-oneliner h3 { font-size: 18px; margin-bottom: 16px; }
         .install-note { text-align: center; color: var(--text-muted); font-size: 14px; margin-top: 12px; }
-        .soon { display: inline-block; margin-left: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; vertical-align: middle; }
         .example-caption { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
         code { font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; }
         .install code { display: block; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 14px; text-align: left; overflow-x: auto; }
-        .feature-card code, .example-caption code { display: inline; background: #f3f3f3; color: inherit; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+        .hero code, .problem-item code, .feature-card code, .example-caption code { display: inline; background: #f3f3f3; color: inherit; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
         details { max-width: 600px; margin: 24px auto 0; text-align: center; }
         details summary { cursor: pointer; padding: 12px; background: var(--bg-alt); border-radius: 8px; font-weight: 500; }
         details summary:hover { background: #e8f3fd; }
@@ -104,7 +110,7 @@
         .dot-yellow { background: #ffbd2e; }
         .dot-green { background: #27c93f; }
         .terminal-body { padding: 20px; font-family: 'SF Mono', 'Monaco', 'Consolas', monospace; font-size: 13px; color: #d4d4d4; line-height: 1.5; overflow-x: auto; }
-        .terminal-line { margin-bottom: 4px; }
+        .terminal-line { margin-bottom: 4px; white-space: pre; }
         .prompt { color: #4ec9b0; }
         .command { color: #9cdcfe; }
         .output { color: #d4d4d4; }
@@ -147,14 +153,14 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Find the cloud resources you <span>forgot</span> before they bill you.</h1>
-            <p>Idle disks, orphaned IPs, NAT gateways, stopped-but-billed VMs, and whatever your AI agent spun up. Azure and AWS. Free CLI, read-only by default.</p>
+            <h1>Find and clean up the cloud resources you <span>forgot</span>.</h1>
+            <p>Idle disks, orphaned IPs, NAT gateways, stopped-but-billed VMs, and resources an AI agent created on Azure and AWS. <code>azguard cleanup</code> is a dry run until <code>--apply</code>. Resources tagged <code>azguard:keep=true</code> are never deleted. Free, open source, CLI only.</p>
             <div class="supported-clouds">
-                <span><span class="cloud-badge azure-badge">Azure</span> 12 free-tier services</span>
-                <span><span class="cloud-badge aws-badge">AWS</span> 13 free-tier services</span>
+                <span><span class="cloud-badge azure-badge">Azure</span> forgotten and agent-created</span>
+                <span><span class="cloud-badge aws-badge">AWS</span> forgotten and agent-created</span>
             </div>
             <div class="cta-buttons">
-                <a href="#install" class="btn btn-primary">Get Started Free</a>
+                <a href="#install" class="btn btn-primary">Install the CLI</a>
                 <a href="https://github.com/cdobratz/AzGuard" class="btn btn-secondary" target="_blank">View on GitHub</a>
             </div>
         </div>
@@ -162,7 +168,7 @@
 
     <section class="terminal">
         <div class="container">
-            <p class="example-caption">Example output from <code>azguard resources</code>. Figures are samples, not a live account.</p>
+            <p class="example-caption">Sample dry run from <code>azguard cleanup</code>. Figures are samples, not a live account. Pass <code>--apply</code> to delete.</p>
             <div class="terminal-window">
                 <div class="terminal-header">
                     <div class="terminal-dot dot-red"></div>
@@ -170,14 +176,17 @@
                     <div class="terminal-dot dot-green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div class="terminal-line"><span class="prompt">$</span> <span class="command">azguard resources</span></div>
-                    <div class="terminal-line"><span class="output">Idle and orphaned resources</span></div>
-                    <div class="terminal-line"><span class="output">azure.disk.unattached       $19.71</span></div>
-                    <div class="terminal-line"><span class="output">azure.publicip.unassociated  $3.65</span></div>
-                    <div class="terminal-line"><span class="output">aws.natgateway.idle         $32.85</span></div>
+                    <div class="terminal-line"><span class="prompt">$</span> <span class="command">azguard cleanup</span></div>
+                    <div class="terminal-line"><span class="output">Dry run. No resources were deleted.</span></div>
                     <div class="terminal-line"><span class="output"></span></div>
-                    <div class="terminal-line"><span class="success">Estimated monthly: $56.21</span></div>
-                    <div class="terminal-line"><span class="output">Read-only. List price, not an invoice.</span></div>
+                    <div class="terminal-line"><span class="warning">WOULD DELETE</span></div>
+                    <div class="terminal-line"><span class="output">azure disk    40d    $19.71</span></div>
+                    <div class="terminal-line"><span class="output">aws volume    12d     $8.00</span></div>
+                    <div class="terminal-line"><span class="output"></span></div>
+                    <div class="terminal-line"><span class="warning">SKIPPED</span></div>
+                    <div class="terminal-line"><span class="output">keep  azguard:keep=true</span></div>
+                    <div class="terminal-line"><span class="output"></span></div>
+                    <div class="terminal-line"><span class="success">would delete 2, skipped 1, failed 0</span></div>
                 </div>
             </div>
         </div>
@@ -185,19 +194,19 @@
 
     <section class="why-matters">
         <div class="container">
-            <h2>Why Free Tiers Surprise You</h2>
+            <h2>Why leftover resources surprise you</h2>
             <div class="problem-grid">
                 <div class="problem-item">
-                    <h3>Silent Expiration</h3>
-                    <p>Azure's 12-month free services don't stop when they expire—they just start charging you. AWS monthly limits just reset and keep going.</p>
+                    <h3>Forgotten and AI-created</h3>
+                    <p>Idle disks, orphaned IPs, NAT gateways, and stopped-but-billed VMs stay after the experiment ends. An AI agent can create the same resources on Azure or AWS and never tear them down.</p>
                 </div>
                 <div class="problem-item">
-                    <h3>Hidden Dependencies</h3>
-                    <p>A "free" VM triggers billable disks, IPs, and bandwidth. AWS Lambda needs S3, CloudWatch, and more. One service becomes five charges.</p>
+                    <h3>Free tiers and credits</h3>
+                    <p>Azure's 12-month free services start charging when they expire. AWS monthly limits reset and keep going. Credits run out on a date you can record before the invoice arrives.</p>
                 </div>
                 <div class="problem-item">
-                    <h3>No Hard Stops</h3>
-                    <p>Both clouds let you exceed limits and bill you later. No warnings, no budget locks by default. You find out when the invoice arrives.</p>
+                    <h3>Nothing deletes itself</h3>
+                    <p><code>azguard cleanup</code> is a dry run until you pass <code>--apply</code>. A resource tagged <code>azguard:keep=true</code> is never deleted.</p>
                 </div>
             </div>
         </div>
@@ -208,20 +217,20 @@
             <h2>Everything You Need</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h3>🎯 Forgotten resources</h3>
-                    <p><code>azguard resources</code> lists idle disks, unassociated public IPs, NAT gateways, stopped-but-billed VMs, and the AWS equivalents, with a monthly list-price estimate. The command is read-only.</p>
+                    <h3>🧹 Clean up forgotten resources</h3>
+                    <p><code>azguard cleanup</code> lists idle disks, unassociated public IPs, NAT gateways, stopped-but-billed VMs, and the AWS equivalents, including resources an AI agent created. The default is a dry run. Pass <code>--apply</code> to delete. A resource tagged <code>azguard:keep=true</code> is never deleted.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>📋 Free tier and spend</h3>
-                    <p><code>azguard status</code> and <code>azguard scan</code> check Azure. <code>azguard aws</code> checks AWS. The limits files cover 12 Azure services and 13 AWS services. <code>azguard cost</code> shows the current month by service.</p>
+                    <h3>📋 Free tier and credits</h3>
+                    <p><code>azguard status</code> and <code>azguard scan</code> check Azure. <code>azguard aws</code> checks AWS. The limits files cover 12 Azure services and 13 AWS services. <code>azguard cost</code> shows the current month by service. <code>azguard init</code> records remaining Azure and AWS credits and when they expire.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎯 Find them first</h3>
+                    <p><code>azguard resources</code> lists the same idle and orphaned resources and prints a monthly list-price estimate. The command is read-only and does not delete anything.</p>
                 </div>
                 <div class="feature-card">
                     <h3>⚠️ Alerts</h3>
                     <p><code>azguard budget</code> stores an Azure threshold from $1 to $100, and <code>azguard status</code> prints it when you run the command. <code>azguard watch</code> polls for new billable resources every 15 minutes and can notify your desktop or a webhook. <code>azguard guard</code> checks billable commands against a session budget.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🧹 Cleanup <span class="soon">Coming soon</span></h3>
-                    <p>Automatic cleanup is coming soon. Today, <code>azguard cleanup</code> prints a static guide and leaves your cloud resources in place.</p>
                 </div>
             </div>
         </div>

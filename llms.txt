@@ -1,20 +1,18 @@
 # AzGuard
 
-> Find the cloud resources you forgot before they bill you.
+> Find and clean up forgotten and AI-agent-created cloud resources on Azure and AWS.
 
-AzGuard is a free command-line tool for Azure and AWS, published by Poietes LLC.
+AzGuard is a free, open source command-line tool for Azure and AWS, published by Poietes LLC.
 
 ## CLI
 
-Source checked: https://github.com/cdobratz/AzGuard commit bdeb046116f29541185f884ce6c940d44299cec8 (main, 2026-10-18).
+Source checked: https://github.com/cdobratz/AzGuard commit bf3abbcc43020ec76defc048c4a43178750bb246 (main, 2026-11-18).
 
-- `azguard resources` finds idle and orphaned resources and prints a monthly list-price estimate. The command is read-only.
+- `azguard cleanup` lists forgotten and AI-agent-created resources on Azure and AWS: idle disks, orphaned public IPs, NAT gateways, stopped-but-billed VMs, and the AWS equivalents. The default is a dry run. Pass `--apply` to delete. A resource tagged `azguard:keep=true` is never deleted.
+- `azguard resources` lists the same resources and prints a monthly list-price estimate. The command is read-only.
+- Free tier and credits come second. `azguard status`, `azguard scan`, `azguard budget`, and `azguard cost` cover Azure free-tier usage, budgets, and cost. `azguard aws` covers AWS free-tier usage and cost. `azguard init` records remaining Azure and AWS credits and when they expire. The limits files list 12 Azure services (`configs/free_tier_limits.yaml`) and 13 AWS services (`configs/aws_free_tier_limits.yaml`).
 - `azguard watch` polls the Azure Activity Log and AWS CloudTrail. The default interval is 15 minutes. It can notify the desktop or a webhook you pass with `--webhook`.
 - `azguard guard` checks billable commands against a session budget.
-- `azguard status`, `azguard scan`, `azguard budget`, and `azguard cost` cover Azure free-tier usage, budgets, and cost.
-- `azguard aws` covers AWS free-tier usage and cost.
-- The limits files list 12 Azure services (`configs/free_tier_limits.yaml`) and 13 AWS services (`configs/aws_free_tier_limits.yaml`).
-- `azguard cleanup` prints a static guide. Automatic cleanup is coming soon.
 - The CLI has no telemetry client. It calls Azure and AWS for the command you run, public price-list APIs when an estimate needs them, and a webhook only when you set one.
 
 `https://azguard.dev/install.sh` installs the latest GitHub release (v1.1.0 as of 2026-10-18) for linux and darwin, amd64 and arm64, after a sha256 check against that release's checksums.txt.
