@@ -22,6 +22,7 @@ Source checked: https://github.com/cdobratz/AzGuard commit bdeb046116f29541185f8
 ## Contact
 
 Poietes LLC
+Email: support@azguard.dev
 Email: info@poietes.org
 Phone: 480-382-0210
 Address: 30 N Gould St, Sheridan, WY 82801
